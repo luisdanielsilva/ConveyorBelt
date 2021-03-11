@@ -9,7 +9,7 @@
 #define SCL A5
 #define OUTPUT_LED A6
 #define STP_EN A7
-#define STP_DIR RST
+//#define STP_DIR RST
 #define EMPTY 13
 #define STP_STEP 12
 #define DCMOTOR3_INH 11
@@ -25,6 +25,12 @@
 #define RX_RS485 0
 #define TX_RS485 1
 
+
+void SENSOR_INTERRUPT()
+{
+
+}
+
 void setup() {
   // put your setup code here, to run once:
   pinMode(ANALOG_INPUT_POT, INPUT);
@@ -35,7 +41,7 @@ void setup() {
   pinMode(SCL, INPUT);          // CAN ALSO BE OUTPUT
   pinMode(OUTPUT_LED, OUTPUT);          
   pinMode(STP_EN, OUTPUT);        
-  pinMode(STP_DIR, OUTPUT);
+  //pinMode(STP_DIR, OUTPUT);
   pinMode(STP_STEP, OUTPUT);
   pinMode(EMPTY, OUTPUT);       // NOT USED
   pinMode(DCMOTOR3_INH, OUTPUT);
@@ -62,7 +68,3 @@ void loop() {
   Serial.print("It's alive!");
 }
 
-void SENSOR_INTERRUPT()
-{
-
-}
