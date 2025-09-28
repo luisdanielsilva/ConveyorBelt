@@ -1,0 +1,6 @@
+/Users/luissilva/Documents/STM32/ConveyorBelt/CMakeFiles/ConveyorBelt.dir
+/Users/luissilva/Documents/STM32/ConveyorBelt/CMakeFiles/edit_cache.dir
+/Users/luissilva/Documents/STM32/ConveyorBelt/CMakeFiles/rebuild_cache.dir
+/Users/luissilva/Documents/STM32/ConveyorBelt/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir
+/Users/luissilva/Documents/STM32/ConveyorBelt/cmake/stm32cubemx/CMakeFiles/edit_cache.dir
+/Users/luissilva/Documents/STM32/ConveyorBelt/cmake/stm32cubemx/CMakeFiles/rebuild_cache.dir
