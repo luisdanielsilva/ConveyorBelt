@@ -1,0 +1,76 @@
+High-Level Summary of the State Machine1. Overview of the State MachineThe state machine controls a conveyor system with five states:STOPPED: Conveyor is off.
+RUNNING_FORWARD: Conveyor moves forward (based on direction_forward=1).
+RUNNING_REVERSE: Conveyor moves reverse (based on direction_forward=0).
+PAUSED: Conveyor is paused but can resume in the last direction.
+FAULT: Conveyor stops due to a sensor trigger, requiring a reset.
+
+The state machine responds to inputs from physical switches and USART commands, which are processed through a command queue to trigger state transitions based on specific conditions.2. Inputs: Switches and USART CommandsPhysical Switches:START (PA6): Pressed to start or pause the conveyor.
+STOP (PB0): Pressed to stop the conveyor.
+DIR (PA1): Pressed and released to toggle the direction (direction_forward between 1 for forward and 0 for reverse).
+SENSOR (PA8): Triggered to indicate a fault condition.
+Each switch has a 50ms debouncing delay to filter out rapid triggers (bounces).
+
+USART Commands (sent via serial, e.g., "S\n", "T\n", "D\n", "E\n"):S: Mimics a START press.
+T: Mimics a STOP press.
+D: Toggles the direction (direction_forward).
+E: Mimics a SENSOR trigger.
+Commands are received via USART2 and processed as single-character inputs.
+
+3. Command QueuePurpose: The queue stores commands from switches and USART to ensure they’re processed in order, avoiding conflicts between simultaneous inputs.
+How Inputs Are Queued:Switches:START press: Sets usart_start_pressed directly and updates the state immediately (no queue for START to avoid redundant transitions).
+STOP press: Adds “T” to the queue.
+DIR press-and-release: Toggles direction_forward directly and updates the state (no “D” command queued to prevent redundant toggles).
+SENSOR trigger: Adds “E” to the queue.
+
+USART Commands: Received commands ("S", "T", "D", "E") are added to the queue by the UART receive callback (HAL_UART_RxCpltCallback).
+
+Queue Structure: A circular buffer (cmd_queue) with a fixed size (QUEUE_SIZE), tracking head, tail, and count of commands.
+Queue Management:enqueue_command: Adds a command to the queue if there’s space.
+dequeue_command: Retrieves the next command for processing.
+clear_command_queue: Empties the queue after processing or before new switch inputs to prevent stale commands.
+
+4. Consuming the QueueThe main loop checks the queue in each iteration:If a command is present (dequeue_command succeeds), it’s processed:S: Sets usart_start_pressed (suppressed if within 100ms of a physical START press to avoid redundancy).
+T: Sets usart_stop_pressed.
+D: Toggles direction_forward.
+E: Sets usart_sensor_triggered.
+
+After processing, the queue is cleared to ensure no stale commands remain.
+
+Each command triggers a call to update_state to evaluate state transitions.
+
+5. State Transitions Based on ConditionsThe state machine evaluates inputs (physical pins or USART flags) to transition between states, using callbacks (stopped_state, running_forward_state, etc.) for each state. Key conditions are:STOPPED:START press or usart_start_pressed: Transitions to RUNNING_FORWARD (if direction_forward=1) or RUNNING_REVERSE (if direction_forward=0).
+SENSOR or usart_sensor_triggered: Ignored (stays STOPPED).
+
+RUNNING_FORWARD or RUNNING_REVERSE:STOP press or usart_stop_pressed: Transitions to STOPPED.
+START press or usart_start_pressed: Transitions to PAUSED.
+SENSOR or usart_sensor_triggered: Transitions to FAULT.
+DIR toggle (direction_forward change): Switches between RUNNING_FORWARD and RUNNING_REVERSE.
+
+PAUSED:STOP press or usart_stop_pressed: Transitions to STOPPED.
+START press or usart_start_pressed: Resumes to RUNNING_FORWARD or RUNNING_REVERSE based on direction_forward.
+SENSOR or usart_sensor_triggered: Transitions to FAULT.
+
+FAULT:STOP press or usart_stop_pressed: Transitions to STOPPED.
+Other inputs: Ignored (stays FAULT).
+
+Flags Reset: USART flags (usart_start_pressed, usart_stop_pressed, usart_sensor_triggered) are reset after 100ms (USART_FLAG_TIMEOUT) to prevent lingering effects.
+
+6. How It All Comes TogetherSwitches: Pressing START, STOP, or SENSOR sets flags or enqueues commands (“T” or “E”), with DIR toggling direction_forward directly. Debouncing (50ms) ensures single triggers.
+USART Commands: “S”, “T”, “D”, “E” are queued and processed like switch inputs.
+Queue Consumption: The main loop dequeues and processes one command at a time, clearing the queue afterward.
+State Changes: update_state evaluates the current state’s callback, checking physical pins, USART flags, and direction_forward to determine the next state, with debug output for transitions (e.g., “State -> RUNNING_REVERSE”).
+
+
+
+TO DO:
+
+1. Fix the issue of multiple toggles when pressing any button once.
+2. remove dead Code
+3. DONE - add \r\n to all UART messages
+4. DONE SORT OF - some bugs but command sort of works - add a speed command via USART (SP10, SP20, SP30, SP40, SP50) in increments of 10 up to 100%
+4.1 - there is a conflict between the speed set by the ADC and the speed set by USART - need to decide which one has priority and implement it
+
+
+5. REMOVED - if the queue reaches 5 commands, simply ignore the last command sent to the queue
+6. light and LED each time sensor is triggered
+7.  
