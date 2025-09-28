@@ -55,6 +55,12 @@
 },
 {
   "directory": "/Users/luissilva/Documents/STM32/ConveyorBelt/build/Debug",
+  "command": "/opt/ST/STM32CubeCLT_1.18.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc -DDEBUG -DSTM32F446xx -DUSE_HAL_DRIVER -I/Users/luissilva/Documents/STM32/ConveyorBelt/Core/Inc -I/Users/luissilva/Documents/STM32/ConveyorBelt/Drivers/STM32F4xx_HAL_Driver/Inc -I/Users/luissilva/Documents/STM32/ConveyorBelt/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/Users/luissilva/Documents/STM32/ConveyorBelt/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/Users/luissilva/Documents/STM32/ConveyorBelt/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles/ConveyorBelt.dir/Core/Src/usart_handler.c.obj -c /Users/luissilva/Documents/STM32/ConveyorBelt/Core/Src/usart_handler.c",
+  "file": "/Users/luissilva/Documents/STM32/ConveyorBelt/Core/Src/usart_handler.c",
+  "output": "CMakeFiles/ConveyorBelt.dir/Core/Src/usart_handler.c.obj"
+},
+{
+  "directory": "/Users/luissilva/Documents/STM32/ConveyorBelt/build/Debug",
   "command": "/opt/ST/STM32CubeCLT_1.18.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc -DDEBUG -DSTM32F446xx -DUSE_HAL_DRIVER -I/Users/luissilva/Documents/STM32/ConveyorBelt/Core/Inc -I/Users/luissilva/Documents/STM32/ConveyorBelt/Drivers/STM32F4xx_HAL_Driver/Inc -I/Users/luissilva/Documents/STM32/ConveyorBelt/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/Users/luissilva/Documents/STM32/ConveyorBelt/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/Users/luissilva/Documents/STM32/ConveyorBelt/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj -c /Users/luissilva/Documents/STM32/ConveyorBelt/Core/Src/system_stm32f4xx.c",
   "file": "/Users/luissilva/Documents/STM32/ConveyorBelt/Core/Src/system_stm32f4xx.c",
   "output": "cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj"
