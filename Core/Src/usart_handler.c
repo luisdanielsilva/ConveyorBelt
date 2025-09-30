@@ -68,46 +68,6 @@ void start_uart_receive(void) {
     HAL_UART_Receive_IT(&huart2, (uint8_t*)&rx_buffer[rx_index], 1);
 }
 
-/* void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-    if (huart->Instance == USART2) {
-        if (rx_buffer[rx_index] == '\n') {
-            rx_buffer[rx_index] = '\0';
-            enqueue_command(rx_buffer);
-// DEBUG
-//            char msg[50];
-//            sprintf(msg,  " Enqueued SERIAL Command: %s\r\n", rx_buffer);
-//            send_uart(msg);
-// END DEBUG
-            rx_index = 0;
-        } else {
-            rx_index = (rx_index < sizeof(rx_buffer) - 1) ? rx_index + 1 : 0;
-        }
-        HAL_UART_Receive_IT(&huart2, (uint8_t*)&rx_buffer[rx_index], 1);
-    }
-} */
-
-/* void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-    if (huart->Instance == USART2) {
-        if (rx_index == 0 && (rx_buffer[0] != 'S' && rx_buffer[0] != 'T' && 
-                              rx_buffer[0] != 'D' && rx_buffer[0] != 'E')) {
-            rx_index = 0; // Reset if first char invalid
-        } else if (rx_index == 1 && rx_buffer[rx_index] == '\r') {
-            rx_index++; // Expect LF next
-        } else if (rx_index == 2 && rx_buffer[rx_index] == '\n') {
-            rx_buffer[1] = '\0'; // Terminate after command
-            enqueue_command(rx_buffer);
-// DEBUG
-            char msg[50];
-            sprintf(msg, "Enqueued SERIAL Command: %s\r\n", rx_buffer);
-            send_uart(msg); 
-// END DEBUG
-            rx_index = 0; // Reset after processing
-        } else {
-            rx_index = (rx_index < 2) ? rx_index + 1 : 0; // Reset on invalid or overflow
-        }
-        HAL_UART_Receive_IT(&huart2, (uint8_t*)&rx_buffer[rx_index], 1);
-    }
-} */
 
  void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == USART2) {
@@ -146,12 +106,6 @@ void start_uart_receive(void) {
         HAL_UART_Receive_IT(&huart2, (uint8_t*)&rx_buffer[rx_index], 1);
     }
 }
-
-
-
-
-
-
 
 
 

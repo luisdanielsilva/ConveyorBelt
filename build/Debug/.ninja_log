@@ -60,3 +60,7 @@
 457	731	1759101308050670343	cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj	c6c6e42ba8139d73
 576	811	1759101308130889020	cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj	b57a7ab1b79a17f0
 811	903	1759101308221000807	ConveyorBelt.elf	d3630d421e82a1be
+8	522	1759184721397599311	CMakeFiles/ConveyorBelt.dir/Core/Src/main.c.obj	e2ed59cad2db8596
+522	798	1759184721663740926	ConveyorBelt.elf	d3630d421e82a1be
+3	537	1759267158780950986	CMakeFiles/ConveyorBelt.dir/Core/Src/usart_handler.c.obj	a5a2bf0413f9f855
+537	814	1759267159051421467	ConveyorBelt.elf	d3630d421e82a1be

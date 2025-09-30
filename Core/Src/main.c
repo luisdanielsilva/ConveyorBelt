@@ -80,16 +80,7 @@ uint8_t usart_sensor_triggered = 0; // Simulate SENSOR state
 
 #define COMMAND_SUPPRESS_DELAY 100 // 100ms to suppress redundant commands
 
-/*
-uint8_t start_stable_count = 0;
-uint8_t stop_stable_count = 0;
-uint8_t dir_stable_count = 0;
-uint8_t sensor_stable_count = 0;
-uint8_t start_last_state = GPIO_PIN_RESET;
-uint8_t stop_last_state = GPIO_PIN_RESET;
-uint8_t dir_last_state = GPIO_PIN_RESET;
-uint8_t sensor_last_state = GPIO_PIN_RESET;
-*/
+
 uint32_t last_start_debounce_time = 0;
 uint32_t last_stop_debounce_time = 0;
 uint32_t last_dir_debounce_time = 0;
@@ -196,9 +187,6 @@ ConveyorState fault_state(void) {
     usart_sensor_triggered = 0;
     return FAULT;
 }
-
-
-
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     
@@ -334,8 +322,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     }
 }
 
-
-
 // ADDED FOR INTERRUPT-DRIVEN ADC HANDLING
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
     if (hadc->Instance == ADC1) {
@@ -390,22 +376,7 @@ void update_state(void) {
             break;
         }
     }
-
-   /*  // Debug current state
-    char msg[50];
-    const char* state_str;
-    switch (current_state) {
-        case STOPPED: state_str = "STOPPED"; break;
-        case RUNNING_FORWARD: state_str = "RUNNING_FORWARD"; break;
-        case RUNNING_REVERSE: state_str = "RUNNING_REVERSE"; break;
-        case PAUSED: state_str = "PAUSED"; break;
-        case FAULT: state_str = "FAULT"; break;
-        default: state_str = "UNKNOWN"; break;
-    }
-    sprintf(msg, "Current State: %s\r\n", state_str);
-    send_uart(msg); */
-
-    // Check SENSOR (e.g., PC13) with debouncing
+     // Check SENSOR (e.g., PC13) with debouncing
             if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET && 
                 HAL_GetTick() - last_sensor_time >= 50) { // 50ms debounce
                 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); // LED on
