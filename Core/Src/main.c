@@ -448,31 +448,32 @@ int main(void)
         sprintf(debug_msg, "DIR: TOGGLED TO %s (direction_forward=%d)\r\n", 
                 direction_forward ? "FORWARD" : "REVERSE", direction_forward);
         send_uart(debug_msg);
-        update_state();
-       
+        //update_state();
     } else if (strcmp(cmd, "S") == 0) {
         if (HAL_GetTick() - last_start_command_time >= COMMAND_SUPPRESS_DELAY) {
             sprintf(msg, "Processed Command: %s (UART)\r\n", cmd);
             send_uart(msg);
             usart_start_pressed = 1;
             last_start_command_time = HAL_GetTick();
-            update_state();
             }
+        //update_state();
     } else if (strcmp(cmd, "T") == 0) {
         sprintf(msg, "Processed Command: %s (UART)\r\n", cmd);
         send_uart(msg);
         usart_stop_pressed = 1; // Simulate STOP press
-        update_state();
+        //update_state();
     } else if (strcmp(cmd, "E") == 0) {
         sprintf(msg, "Processed Command: %s (UART)\r\n", cmd);
         send_uart(msg);
         usart_sensor_triggered = 1; // Simulate SENSOR trigger
-        update_state();
+        //update_state();
     }
+    update_state();         // updates the current state of state machine
     clear_command_queue(); // Clear queue after processing
 }
 
 }
+
   HAL_Delay(100);
   /* USER CODE END 3 */
     /* USER CODE END WHILE */

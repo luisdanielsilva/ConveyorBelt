@@ -65,12 +65,13 @@ State Changes: update_state evaluates the current state’s callback, checking p
 TO DO:
 
 1. Fix the issue of multiple toggles when pressing any button once.
-2. remove dead Code
+2. DONE - remove dead Code
 3. DONE - add \r\n to all UART messages
 4. DONE SORT OF - some bugs but command sort of works - add a speed command via USART (SP10, SP20, SP30, SP40, SP50) in increments of 10 up to 100%
-4.1 - there is a conflict between the speed set by the ADC and the speed set by USART - need to decide which one has priority and implement it
-
-
+    4.1 - whenever a speed is set by either USART command or ADC, it takes 1 second to reach the target speed.
 5. REMOVED - if the queue reaches 5 commands, simply ignore the last command sent to the queue
 6. light and LED each time sensor is triggered
-7.  
+7. Add PWM support for 3 pins to drive a BLDC motor.
+8. move all the state machine related code to it's own state_machine.c/.h
+9. Test PWM using Arduino and if more pins needed add them here (hall sensor, etc)
+10. 
